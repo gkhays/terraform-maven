@@ -4,7 +4,7 @@ locals {
 
   path_source         = "${path.module}/java/src/main/java"
   path_source_zip     = "${path.module}/java/target/deps.zip"
-  path_output_jar     = "${path.module}/java/target/cbc-onboarding-1.0.0.jar"
+  path_output_jar     = "${path.module}/java/target/generic-1.0.0.jar"
 }
 
 resource "null_resource" "local_mvn_build" {
@@ -43,7 +43,7 @@ data "archive_file" "java_source_zip" {
 }
 
 resource "aws_lambda_layer_version" "java_layer" {
-  layer_name          = "${var.cbc_onboarding_lambda_name}_layer"
+  layer_name          = "${var.generic}_layer"
   filename            = local.path_source_zip
   source_code_hash    = data.archive_file.java_source_zip.output_base64sha256
   compatible_runtimes = ["java11"]
